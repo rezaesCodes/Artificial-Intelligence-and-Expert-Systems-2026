@@ -1,11 +1,13 @@
 # Mini Projects
 
-This folder contains the student-facing mini-project releases for the Artificial Intelligence and Expert Systems course.
+This folder contains the five student-facing mini-project releases for the Artificial Intelligence and Expert Systems course.
 
-Each numbered project has its own folder. Project resources are grouped by purpose (for example, a guided walkthrough). Supporting data files are kept alongside the notebook that uses them.
+Each numbered project uses the same folder convention: `g/` for the guide, `project/` for student assignment materials, and `answers/` for reference solutions.
 
-## Current release
+## Projects
 
-- [1 — MLP, RBM and Autoencoder](1-MLP-RBM-AE/): bakery sales guide and supporting CSV files.
-
-Additional project folders will be added as their releases are prepared.
+1. [MLP · RBM · Autoencoder](1-MLP-RBM-AE/) — bakery guide available.
+2. [CNN & Transfer Learning](2-CNN-Transfer-Learning/) — placeholders.
+3. [YOLO & U-Net](3-YOLO-UNet/) — placeholders.
+4. [RNN · LSTM · GRU](4-RNN-LSTM-GRU/) — placeholders.
+5. [Transformers & ViTs](5-Transformers-ViTs/) — placeholders.

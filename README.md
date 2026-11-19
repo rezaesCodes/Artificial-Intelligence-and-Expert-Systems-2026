@@ -4,31 +4,20 @@ Public student-facing repository for the Artificial Intelligence and Expert Syst
 
 ## Course project hub
 
-The GitHub Pages site uses the same five-card project hub layout as the previous course release page:
-
 [Open the mini-project hub](https://rezaesCodes.github.io/Artificial-Intelligence-and-Expert-Systems-2026/)
 
-## Available material
+## Project releases
 
-### 1. MLP · RBM · Autoencoder — Bakery Sales Guide
+1. **MLP · RBM · Autoencoder** — bakery sales guide available; student project and answers placeholders.
+2. **CNN & Transfer Learning** — guide, student project, and answers placeholders.
+3. **YOLO & U-Net** — guide, student project, and answers placeholders.
+4. **RNN · LSTM · GRU** — guide, student project, and answers placeholders.
+5. **Transformers & ViTs** — guide, student project, and answers placeholders.
 
-The first release contains a guided notebook using bakery sales data. It introduces:
-- **MLP** for daily revenue prediction;
-- **RBM** for discovering patterns in 14-day sales windows;
-- **Autoencoder** for reconstructing sales windows and exploring reconstruction errors.
+## Folder convention
 
-Open the [project folder](miniProjects/1-MLP-RBM-AE/) or go directly to the [guide and its supporting files](miniProjects/1-MLP-RBM-AE/g/).
+- `g/` — guided walkthrough and supporting material.
+- `project/` — student-facing assignment files.
+- `answers/` — reference answers.
 
-The `train.csv` file is required. `wetter.csv` and `kiwo.csv` are optional supporting files for the MLP section.
-
-## Repository layout
-
-    miniProjects/
-    └── 1-MLP-RBM-AE/
-        └── g/
-            ├── proj1-g.ipynb
-            ├── train.csv
-            ├── wetter.csv
-            └── kiwo.csv
-
-Other project cards are placeholders for upcoming releases. Only files explicitly linked from an available project card are currently released to students.
+Each project has README files in its folders explaining the current release status. Unreleased materials are represented by placeholders only.
