@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="Artificial Intelligence and Expert Systems — Fall Semester 2026 mini-project releases and learning materials.">
+  <title>Artificial Intelligence &amp; Expert Systems — Fall Semester 2026</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg:#0f1116; --panel:#181b22; --panel2:#20242d; --line:rgba(255,255,255,.10);
+      --text:#f2f4f8; --soft:#c8ced8; --muted:#8e97a5; --blue:#8fa9d8;
+      --blue2:#6787c6; --locked:#707887;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(950px 500px at 50% -210px,rgba(111,137,183,.18),transparent 70%),linear-gradient(180deg,#151922 0%,var(--bg) 58%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.012em}
+    a{color:inherit}
+    .wrap{width:min(1440px,calc(100% - 56px));margin:0 auto}
+    .topbar{height:62px;border-bottom:1px solid var(--line);background:rgba(12,14,18,.78);backdrop-filter:blur(16px);display:flex;align-items:center;position:sticky;top:0;z-index:5}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%}
+    .brand{display:flex;align-items:center;gap:13px;text-decoration:none}
+    .brand-mark{width:38px;height:38px;border:1px solid rgba(255,255,255,.22);border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#343c4a,#1a1e27);box-shadow:inset 0 1px rgba(255,255,255,.14);color:#e3e9f5}
+    .brand-mark svg{width:24px;height:24px}
+    .brand-copy{display:flex;flex-direction:column;gap:3px}
+    .brand-copy strong{font-size:12px;letter-spacing:.13em;text-transform:uppercase}
+    .brand-copy span{font-size:10px;color:var(--muted);letter-spacing:.09em}
+    .nav{display:flex;align-items:center;gap:22px;color:var(--muted);font-size:12px}
+    .nav a{text-decoration:none;transition:color .2s}.nav a:hover{color:var(--text)}
+    .nav-pill{border:1px solid var(--line);border-radius:99px;padding:8px 12px;background:rgba(255,255,255,.035);color:#dce1e9;letter-spacing:.08em;font-size:10px}
+    .hero{padding:62px 0 34px;display:flex;justify-content:space-between;align-items:flex-end;gap:30px}
+    .eyebrow{display:flex;align-items:center;gap:10px;color:#aab4c4;font-size:10px;font-weight:750;letter-spacing:.2em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:24px;height:1px;background:#98a7bf}
+    h1{font-size:clamp(38px,5vw,58px);line-height:1;letter-spacing:-.06em;font-weight:790;margin:15px 0 12px}
+    .hero p{max-width:650px;color:#a7afbd;font-size:14px;line-height:1.75;margin:0}
+    .course-name{color:#d5dbe5;font-size:10px;font-weight:750;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}.term{display:flex;align-items:center;gap:10px;color:#aeb9ca;font-size:10px;font-weight:750;letter-spacing:.17em;text-transform:uppercase;white-space:nowrap}
+    .term-dot{width:7px;height:7px;border-radius:50%;background:#b3c0d8;box-shadow:0 0 0 4px rgba(179,192,216,.12)}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 16px}
+    .section-head h2{font-size:11px;color:#d8deea;letter-spacing:.18em;text-transform:uppercase;margin:0;font-weight:750}
+    .section-head span{font-size:10px;color:#747f90;letter-spacing:.13em}
+    .project-intro{margin:-5px 0 20px;color:#9da7b6;font-size:12px;line-height:1.6;letter-spacing:.005em}
+    .project-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+    .project-card{border:0;background:none;color:inherit;text-align:left;min-width:0;padding:0;display:flex;flex-direction:column;gap:13px;font:inherit;cursor:pointer;transition:transform .22s,opacity .22s}
+    .project-card:not(:disabled):hover{transform:translateY(-5px)}
+    .project-card:focus-visible{outline:2px solid #dce7ff;outline-offset:5px;border-radius:14px}
+    .project-card:disabled{cursor:not-allowed;opacity:.58}
+    .folder-stage{width:100%;aspect-ratio:210/297;position:relative;isolation:isolate;transition:filter .22s,opacity .22s}
+    .project-card:not(:disabled):hover .folder-stage{filter:brightness(1.04)}
+    .mailer{position:absolute;inset:0;overflow:hidden;border:1px solid #a99f8b;border-radius:7px;background:linear-gradient(145deg,#e8e0d0 0%,#d9cfbd 54%,#c9bda8 100%);box-shadow:0 14px 30px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.8);color:#5f594f}
+    .mailer:before{content:"";position:absolute;inset:7px;border:1px solid rgba(79,70,56,.18);border-radius:3px;pointer-events:none}
+    .mailer:after{content:"";position:absolute;left:8px;top:25%;bottom:8%;width:1px;background:rgba(91,80,62,.22);box-shadow:1px 0 rgba(255,255,255,.18);pointer-events:none}
+    .mailer-top-strip{position:absolute;left:0;right:0;top:0;height:18%;background:linear-gradient(180deg,#eee8dc,#ded4c2);border-bottom:1px solid rgba(91,80,62,.12)}
+    .mailer-perforation{position:absolute;left:8%;right:8%;top:18%;border-top:1px dashed rgba(81,72,59,.62);z-index:2}
+    .mailer-scissors{position:absolute;left:7%;top:calc(18% - 9px);width:18px;height:18px;padding:2px;color:#5d5549;background:#e1d8c8;z-index:3}
+    .mailer-scissors svg{display:block;width:100%;height:100%}
+    .mailer-cut-edge{display:none}
+    .mailer-open .mailer-top-strip{display:none}
+    .mailer-open .mailer-perforation{top:11%;left:0;right:0;border-top:1px solid rgba(72,65,54,.48)}
+    .mailer-open .mailer-cut-edge{display:block;position:absolute;left:0;right:0;top:calc(11% - 2px);height:4px;background:repeating-linear-gradient(135deg,transparent 0 4px,rgba(91,79,60,.54) 4px 5px,transparent 5px 8px);z-index:2}
+    .mailer-open .mailer-scissors{left:7px;top:calc(11% - 9px);opacity:.65;transform:rotate(-12deg)}
+    .mailer-sealed .mailer-top-strip{height:18%}.mailer-sealed .mailer-perforation{left:0;right:0}
+    .mailer-sealed .mailer-scissors{opacity:.95}
+    .project-card.active .mailer{border-color:#c7b99f}
+    .project-card.locked .mailer{filter:grayscale(.6);opacity:.78}
+    .project-art{position:absolute;left:14%;right:14%;top:34%;height:48%;color:#62665f;z-index:2;filter:drop-shadow(0 3px 4px rgba(71,62,48,.12))}
+    .project-art svg{width:100%;height:100%;display:block}
+    .project-meta{display:flex;flex-direction:column;gap:6px;padding:0 3px;min-height:72px}
+    .project-meta strong{font-size:14px;line-height:1.25;font-weight:700;color:#e6e9ef;letter-spacing:-.025em}
+    .project-date{font-size:10px;line-height:1.4;color:#939cab;letter-spacing:.07em;text-transform:uppercase}
+    .project-state{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#c0c6d0;font-weight:750}
+    .project-card:not(:disabled) .project-state{color:#c4d3ec}
+    .project-card:disabled .project-state{color:#7b8492}
+    .hint{display:flex;justify-content:space-between;gap:20px;align-items:center;margin:28px 0 46px;padding:14px 16px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.022);color:#929baa;font-size:11px;line-height:1.6}
+    .hint strong{color:#d2d8e2}.hint .key{font-size:9px;letter-spacing:.16em;white-space:nowrap}
+    footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify-content:space-between;gap:18px;color:#747e8d;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+    footer a{color:#aab4c4;text-decoration:none}footer a:hover{color:#fff}
+    .modal-backdrop{position:fixed;inset:0;padding:24px;display:none;align-items:center;justify-content:center;background:rgba(5,7,10,.78);backdrop-filter:blur(9px);z-index:10}
+    .modal-backdrop.open{display:flex}
+    .modal{width:min(900px,100%);max-height:calc(100vh - 48px);overflow:auto;border:1px solid rgba(255,255,255,.15);border-radius:20px;background:linear-gradient(145deg,#202633,#151920 62%);box-shadow:0 28px 85px rgba(0,0,0,.55)}
+    .modal-top{padding:29px 32px 23px;border-bottom:1px solid var(--line);position:relative;display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:12px 28px;align-items:center}
+    .modal-top-copy{min-width:0}.modal-kicker{font-size:9px;letter-spacing:.19em;color:#9eacc3;text-transform:uppercase;font-weight:800;margin-bottom:9px}
+    .modal h3{font-size:clamp(25px,4vw,34px);line-height:1.05;letter-spacing:-.045em;margin:0 44px 10px 0}
+    .modal-date{color:#a9b5c8;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:13px}
+    .modal-desc{color:#b0b8c5;font-size:12px;line-height:1.75;margin:0;max-width:620px}
+    .modal-art{width:170px;height:132px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:linear-gradient(145deg,rgba(138,155,184,.14),rgba(255,255,255,.02));display:grid;place-items:center;color:#cad7ed;padding:12px}
+    .modal-art svg{width:100%;height:100%}
+    .close{position:absolute;right:18px;top:18px;width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#d6dce6;font-size:20px;cursor:pointer}
+    .modal-body{padding:24px 32px 29px}.resource-title{margin:0 0 12px;color:#dbe1eb;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+    .resource-rows{display:flex;flex-direction:column;gap:16px}
+    .resource-row-block{display:flex;flex-direction:column;gap:8px}
+    .resource-row-title{font-size:9px;color:#8f9db1;letter-spacing:.14em;font-weight:800;text-transform:uppercase}
+    .resource-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+    .resource-row[data-count="1"] .resource{grid-column:1/-1;min-height:76px;flex-direction:row;align-items:center}
+    .resource-row[data-count="1"] .resource-top{width:auto;min-width:74px}
+    .resource-locked{cursor:not-allowed;opacity:.62;background:rgba(255,255,255,.018)}
+    .resource-lock{font-size:13px;line-height:1;color:#aab4c4}
+    .resource{min-height:95px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;padding:14px 15px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.035);text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+    .resource[href]:hover{background:rgba(151,176,218,.1);border-color:rgba(164,188,226,.42);transform:translateY(-2px)}
+    .resource-top{display:flex;width:100%;justify-content:space-between;align-items:center}.resource-icon{font-size:9px;font-weight:850;letter-spacing:.1em;color:#aabbd8;border:1px solid rgba(177,197,231,.24);padding:5px 7px;border-radius:6px;background:rgba(138,164,205,.08)}
+    .resource-arrow{color:#8499bc;font-size:14px}.resource-copy strong{display:block;font-size:12px;color:#e8edf5;margin-bottom:4px}.resource-copy span{display:block;color:#96a2b4;font-size:10px;line-height:1.45}
+    .modal-note{margin:17px 0 0;padding:12px 14px;border-left:2px solid #829ac2;background:rgba(135,158,197,.08);color:#9eabba;font-size:10px;line-height:1.65}
+    @media(max-width:1040px){.project-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px}.resource-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:640px){.wrap{width:calc(100% - 32px)}.topbar{height:58px}.course-name{font-size:8px;letter-spacing:.09em}.term{font-size:8px;letter-spacing:.11em}.topbar-inner{gap:8px}.project-intro{font-size:11px}.project-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 13px}.project-meta strong{font-size:13px}.hint{align-items:flex-start;flex-direction:column;margin-bottom:32px}.modal-backdrop{padding:10px;align-items:flex-end}.modal{max-height:92vh;border-radius:17px 17px 12px 12px}.modal-top{padding:23px 20px 18px;grid-template-columns:1fr 86px;gap:8px 12px}.modal-art{width:86px;height:86px}.modal h3{font-size:25px}.modal-desc{grid-column:1/-1}.modal-body{padding:18px 20px 22px}.resource-row{grid-template-columns:1fr}.resource{min-height:75px;flex-direction:row;align-items:center;justify-content:space-between}.resource-copy{flex:1;min-width:0}.resource-row .resource-top{width:auto;min-width:74px;flex:0 0 auto;gap:8px}.resource-copy strong,.resource-copy span{overflow-wrap:anywhere;word-break:normal}footer{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="course-name">ARTIFICIAL INTELLIGENCE &amp; EXPERT SYSTEMS</div>
+      <div class="term"><span class="term-dot"></span>FALL 2026</div>
+    </div>
+  </header>
+
+  <main id="top" class="wrap">
+    <section id="projects" aria-labelledby="project-heading">
+      <div class="section-head"><h2 id="project-heading">PROJECTS</h2><span>05 RELEASES</span></div>
+      <p class="project-intro">Mini projects for the Artificial Intelligence and Expert Systems course.</p>
+      <div id="projectGrid" class="project-grid" aria-live="polite"></div>
+    </section>
+    <div class="hint"><span><strong>How it works:</strong> open an unsealed package to access its materials. Sealed packages are upcoming releases.</span><span class="key">OPEN A PACKAGE ↗</span></div>
+  </main>
+
+  <footer class="wrap"><span>ARTIFICIAL INTELLIGENCE &amp; EXPERT SYSTEMS · FALL SEMESTER 2026</span><span>Built for the 2026 course · <a href="https://github.com/rezaesCodes/Artificial-Intelligence-and-Expert-Systems-2026" target="_blank" rel="noopener">Source repository ↗</a></span></footer>
+
+  <div id="modalBackdrop" class="modal-backdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+      <div class="modal-top">
+        <button class="close" id="closeModal" aria-label="Close project details">×</button>
+        <div class="modal-top-copy"><div class="modal-kicker">PROJECT RESOURCES · 01</div><h3 id="modalTitle">MLP · RBM · Autoencoder</h3><div class="modal-date" id="modalDate"></div><p class="modal-desc" id="modalDescription"></p></div>
+        <div class="modal-art" id="modalArt" aria-hidden="true"></div>
+      </div>
+      <div class="modal-body"><p class="resource-title">Project materials</p><div id="resourceList" class="resource-rows"></div><p class="modal-note" id="modalNote"></p></div>
+    </section>
+  </div>
+
+  <script>
+    const modelArt = {
+      mlp: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke-width="1.45" opacity=".56"><path d="M35 36L102 24M35 36L102 60M35 36L102 96M35 36L102 128M35 75L102 24M35 75L102 60M35 75L102 96M35 75L102 128M35 114L102 24M35 114L102 60M35 114L102 96M35 114L102 128M102 24L181 47M102 24L181 103M102 60L181 47M102 60L181 103M102 96L181 47M102 96L181 103M102 128L181 47M102 128L181 103"/></g>
+        <g fill="#c9d4e7" stroke="#eef3fb" stroke-width="1.2"><circle cx="35" cy="36" r="7"/><circle cx="35" cy="75" r="7"/><circle cx="35" cy="114" r="7"/><circle cx="102" cy="24" r="7"/><circle cx="102" cy="60" r="7"/><circle cx="102" cy="96" r="7"/><circle cx="102" cy="128" r="7"/><circle cx="181" cy="47" r="7"/><circle cx="181" cy="103" r="7"/></g>
+        <g fill="#f0f3f8" stroke="#fff" stroke-width=".7"><circle cx="35" cy="36" r="3"/><circle cx="35" cy="75" r="3"/><circle cx="35" cy="114" r="3"/><circle cx="181" cy="47" r="3"/><circle cx="181" cy="103" r="3"/></g>
+      </svg>`,
+      cnn: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke-width="1.5" opacity=".62">
+          <path d="M20 42H54M20 75H54M20 108H54M54 42L88 28M54 42L88 75M54 75L88 28M54 75L88 75M54 75L88 122M54 108L88 75M54 108L88 122"/>
+          <path d="M88 28L130 42M88 75L130 75M88 122L130 108M130 42L170 30M130 42L170 75M130 75L170 75M130 108L170 75M130 108L170 120"/>
+        </g>
+        <g fill="#d7deea" stroke="#f6f8fb" stroke-width="1.2">
+          <rect x="12" y="33" width="16" height="18" rx="3"/><rect x="12" y="66" width="16" height="18" rx="3"/><rect x="12" y="99" width="16" height="18" rx="3"/>
+          <rect x="80" y="20" width="16" height="16" rx="3"/><rect x="80" y="67" width="16" height="16" rx="3"/><rect x="80" y="114" width="16" height="16" rx="3"/>
+          <rect x="122" y="34" width="16" height="16" rx="3"/><rect x="122" y="67" width="16" height="16" rx="3"/><rect x="122" y="100" width="16" height="16" rx="3"/>
+          <rect x="162" y="22" width="16" height="16" rx="3"/><rect x="162" y="67" width="16" height="16" rx="3"/><rect x="162" y="112" width="16" height="16" rx="3"/>
+        </g>
+        <path d="M190 47L205 75L190 103" stroke-width="2" opacity=".8"/><circle cx="205" cy="75" r="6" fill="#eef2f8" stroke="#fff"/>
+      </svg>`,
+      hopfield: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <g opacity=".55" stroke-width="1.5"><path d="M110 18L173 54L173 106L110 138L47 106L47 54Z M110 18L110 138M47 54L173 106M173 54L47 106M110 18L173 106M110 18L47 106M47 54L173 54M47 106L173 106M173 54L110 138M47 54L110 138"/></g>
+        <g fill="#cdd5e3" stroke="#f0f4fa" stroke-width="1.3"><circle cx="110" cy="18" r="8"/><circle cx="173" cy="54" r="8"/><circle cx="173" cy="106" r="8"/><circle cx="110" cy="138" r="8"/><circle cx="47" cy="106" r="8"/><circle cx="47" cy="54" r="8"/></g>
+      </svg>`,
+      mamdani: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M25 124H197M25 124V18" stroke-width="2" opacity=".8"/><path d="M190 118L197 124L190 130M19 25L25 18L31 25" stroke-width="2" opacity=".8"/>
+        <path d="M34 124L70 34L106 124" stroke-width="2.2" opacity=".9"/><path d="M70 124L111 26L152 124" stroke-width="2.2" opacity=".85"/><path d="M112 124L156 48L196 124" stroke-width="2.2" opacity=".75"/>
+        <path d="M34 124H196" stroke-width="1.2" opacity=".3"/>
+      </svg>`,
+      tsk: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke-width="1.8" opacity=".65"><path d="M18 35H70M18 75H70M18 115H70M70 35L112 24M70 35L112 75M70 75L112 75M70 75L112 24M70 75L112 126M70 115L112 75M70 115L112 126M112 24L166 42M112 75L166 75M112 126L166 108"/></g>
+        <g fill="#d7deea" stroke="#f6f8fb" stroke-width="1"><circle cx="18" cy="35" r="6"/><circle cx="18" cy="75" r="6"/><circle cx="18" cy="115" r="6"/><circle cx="112" cy="24" r="7"/><circle cx="112" cy="75" r="7"/><circle cx="112" cy="126" r="7"/></g>
+        <g fill="rgba(215,222,234,.18)" stroke="#e7edf7" stroke-width="1.3"><rect x="157" y="29" width="49" height="26" rx="6"/><rect x="157" y="62" width="49" height="26" rx="6"/><rect x="157" y="95" width="49" height="26" rx="6"/></g>
+        <g stroke-width="1.5"><path d="M166 43H197M166 76H197M166 109H197" opacity=".8"/></g>
+      </svg>`,
+      optimization: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 18H203M16 18V132" stroke-width="1.5" opacity=".55"/>
+        <g stroke-width="1.5" opacity=".45"><ellipse cx="119" cy="79" rx="76" ry="47" transform="rotate(-24 119 79)"/><ellipse cx="119" cy="79" rx="55" ry="33" transform="rotate(-24 119 79)"/><ellipse cx="119" cy="79" rx="33" ry="19" transform="rotate(-24 119 79)"/><ellipse cx="119" cy="79" rx="13" ry="7" transform="rotate(-24 119 79)"/></g>
+        <path d="M34 117L64 103L78 92L100 93L118 70L137 71L151 57L169 63" stroke-width="2.4"/><path d="M162 54L169 63L157 66" stroke-width="2.4"/>
+        <g fill="#eef2f8" stroke="#fff"><circle cx="34" cy="117" r="4.2"/><circle cx="64" cy="103" r="4.2"/><circle cx="100" cy="93" r="4.2"/><circle cx="137" cy="71" r="4.2"/><circle cx="169" cy="63" r="5"/></g>
+      </svg>`
+    };
+
+    const repoRoot = "https://github.com/rezaesCodes/Artificial-Intelligence-and-Expert-Systems-2026";
+    const repoRoot = "https://github.com/rezaesCodes/Artificial-Intelligence-and-Expert-Systems-2026";
+    const projects = [
+      {
+        "id":"mlp","number":"01","title":"MLP · RBM · Autoencoder",
+        "dates":"OCT 18 — NOV 01","state":"available","stateLabel":"",
+        "artKey":"mlp","fileCount":4,
+        "description":"A guided bakery-sales project covering three neural-network approaches: an MLP for sales prediction, an RBM for discovering patterns in 14-day sales windows, and an autoencoder for reconstruction and anomaly exploration. The guide notebook and its supporting data files are available below.",
+        "rows":[{"title":"01 · GUIDE","items":[
+          {"label":"Bakery sales guide notebook","detail":"Guided MLP, RBM and Autoencoder walkthrough","kind":"IPYNB","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/proj1-g.ipynb"},
+          {"label":"Bakery sales dataset","detail":"Daily revenue by product group; required for the guide","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/train.csv"},
+          {"label":"Weather data","detail":"Optional input for the MLP section","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/wetter.csv"},
+          {"label":"Kieler Woche events","detail":"Optional event indicator for the MLP section","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/kiwo.csv"}
+        ]}],
+        "note":"Start with the bakery sales guide notebook. Keep train.csv in the same folder when running the notebook. wetter.csv and kiwo.csv are optional and are only used when the corresponding optional MLP features are enabled."
+      },
+      {"id":"cnn","number":"02","title":"CNN","dates":"NOV 02 — NOV 11","state":"soon","stateLabel":"Soon","artKey":"cnn","fileCount":0},
+      {"id":"mamdani","number":"03","title":"Mamdani Fuzzy Inference Systems","dates":"NOV 12 — NOV 21","state":"soon","stateLabel":"Soon","artKey":"mamdani","fileCount":0},
+      {"id":"tsk","number":"04","title":"TSK Fuzzy Inference Systems","dates":"NOV 22 — DEC 01","state":"soon","stateLabel":"Soon","artKey":"tsk","fileCount":0},
+      {"id":"optimization","number":"05","title":"Optimization Algorithms","dates":"DEC 02 — DEC 11","state":"soon","stateLabel":"Soon","artKey":"optimization","fileCount":0}
+    ];
+
+    const grid=document.getElementById('projectGrid');
+    const backdrop=document.getElementById('modalBackdrop');
+    const closeButton=document.getElementById('closeModal');
+    let lastFocused=null;
+
+    function renderProjects(){
+      grid.innerHTML=projects.map(p=>{
+        const disabled=p.state!=='available';
+        const art=modelArt[p.artKey]||'';
+        const packageMarkup='<span class="mailer '+(disabled?'mailer-sealed':'mailer-open')+'"><span class="mailer-top-strip"></span><span class="mailer-perforation"></span><span class="mailer-scissors" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.7"/><circle cx="6" cy="18" r="2.7"/><path d="M8.2 7.8L20 19M8.2 16.2L20 5"/></svg></span><span class="mailer-cut-edge"></span></span>';
+        return '<button class="project-card '+(disabled?'locked':'active')+'" type="button" data-project="'+p.id+'" '+(disabled?'disabled aria-disabled="true"':'aria-haspopup="dialog"')+' aria-label="'+p.title+(disabled?', coming soon':', open materials')+'">'+
+          '<span class="folder-stage" aria-hidden="true">'+packageMarkup+'<span class="project-art">'+art+'</span></span>'+
+          '<span class="project-meta"><strong>'+p.title+'</strong><span class="project-date">'+p.dates+'</span>'+(p.stateLabel?'<span class="project-state">'+p.stateLabel+'</span>':'')+'</span></button>';
+      }).join('');
+      grid.querySelectorAll('button[data-project]:not(:disabled)').forEach(b=>b.addEventListener('click',()=>openProject(b.dataset.project,b)));
+    }
+    function openProject(id,button){
+      const p=projects.find(x=>x.id===id&&x.state==='available'); if(!p)return;
+      lastFocused=button||document.activeElement;
+      document.getElementById('modalTitle').textContent=p.title;
+      document.getElementById('modalDate').textContent=p.dates;
+      document.getElementById('modalDescription').textContent=p.description;
+      document.getElementById('modalArt').innerHTML=modelArt[p.artKey]||'';
+      document.getElementById('modalNote').textContent=p.note||'';
+      document.getElementById('resourceList').innerHTML=(p.rows||[]).map(row=>'<section class="resource-row-block"><div class="resource-row-title">'+row.title+'</div><div class="resource-row" data-count="'+row.items.length+'">'+row.items.map(r=>{const top='<span class="resource-top"><span class="resource-icon">'+r.kind+'</span><span class="'+(r.locked?'resource-lock':'resource-arrow')+'">'+(r.locked?'🔒':'↗')+'</span></span><span class="resource-copy"><strong>'+r.label+'</strong><span>'+r.detail+'</span></span>';return r.locked?'<div class="resource resource-locked" aria-disabled="true">'+top+'</div>':'<a class="resource" href="'+r.href+'" target="_blank" rel="noopener">'+top+'</a>';}).join('')+'</div></section>').join('');
+      backdrop.classList.add('open');document.body.style.overflow='hidden';closeButton.focus();
+    }
+    function closeProject(){backdrop.classList.remove('open');document.body.style.overflow='';if(lastFocused&&lastFocused.focus)lastFocused.focus()}
+    closeButton.addEventListener('click',closeProject);
+    backdrop.addEventListener('click',e=>{if(e.target===backdrop)closeProject()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&backdrop.classList.contains('open'))closeProject()});
+    renderProjects();
+  </script>
+</body>
+</html>
