@@ -43,10 +43,12 @@
     .project-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
     .project-card{border:0;background:none;color:inherit;text-align:left;min-width:0;padding:0;display:flex;flex-direction:column;gap:13px;font:inherit;cursor:pointer;transition:transform .22s,opacity .22s}
     .project-card:not(:disabled):hover{transform:translateY(-5px)}
+    .project-card.locked:not(:disabled):hover{transform:none}
     .project-card:focus-visible{outline:2px solid #dce7ff;outline-offset:5px;border-radius:14px}
     .project-card:disabled{cursor:not-allowed;opacity:.58}
     .folder-stage{width:100%;aspect-ratio:210/297;position:relative;isolation:isolate;transition:filter .22s,opacity .22s}
     .project-card:not(:disabled):hover .folder-stage{filter:brightness(1.04)}
+    .project-card.locked:not(:disabled):hover .folder-stage{filter:none}
     .mailer{position:absolute;inset:0;overflow:hidden;border:1px solid #a99f8b;border-radius:7px;background:linear-gradient(145deg,#e8e0d0 0%,#d9cfbd 54%,#c9bda8 100%);box-shadow:0 14px 30px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.8);color:#5f594f}
     .mailer:before{content:"";position:absolute;inset:7px;border:1px solid rgba(79,70,56,.18);border-radius:3px;pointer-events:none}
     .mailer:after{content:"";position:absolute;left:8px;top:25%;bottom:8%;width:1px;background:rgba(91,80,62,.22);box-shadow:1px 0 rgba(255,255,255,.18);pointer-events:none}
@@ -137,66 +139,41 @@
 
   <script>
     const modelArt = {
-      mlp: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <g stroke-width="1.45" opacity=".56"><path d="M35 36L102 24M35 36L102 60M35 36L102 96M35 36L102 128M35 75L102 24M35 75L102 60M35 75L102 96M35 75L102 128M35 114L102 24M35 114L102 60M35 114L102 96M35 114L102 128M102 24L181 47M102 24L181 103M102 60L181 47M102 60L181 103M102 96L181 47M102 96L181 103M102 128L181 47M102 128L181 103"/></g>
-        <g fill="#c9d4e7" stroke="#eef3fb" stroke-width="1.2"><circle cx="35" cy="36" r="7"/><circle cx="35" cy="75" r="7"/><circle cx="35" cy="114" r="7"/><circle cx="102" cy="24" r="7"/><circle cx="102" cy="60" r="7"/><circle cx="102" cy="96" r="7"/><circle cx="102" cy="128" r="7"/><circle cx="181" cy="47" r="7"/><circle cx="181" cy="103" r="7"/></g>
-        <g fill="#f0f3f8" stroke="#fff" stroke-width=".7"><circle cx="35" cy="36" r="3"/><circle cx="35" cy="75" r="3"/><circle cx="35" cy="114" r="3"/><circle cx="181" cy="47" r="3"/><circle cx="181" cy="103" r="3"/></g>
-      </svg>`,
-      cnn: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <g stroke-width="1.5" opacity=".62">
-          <path d="M20 42H54M20 75H54M20 108H54M54 42L88 28M54 42L88 75M54 75L88 28M54 75L88 75M54 75L88 122M54 108L88 75M54 108L88 122"/>
-          <path d="M88 28L130 42M88 75L130 75M88 122L130 108M130 42L170 30M130 42L170 75M130 75L170 75M130 108L170 75M130 108L170 120"/>
-        </g>
-        <g fill="#d7deea" stroke="#f6f8fb" stroke-width="1.2">
-          <rect x="12" y="33" width="16" height="18" rx="3"/><rect x="12" y="66" width="16" height="18" rx="3"/><rect x="12" y="99" width="16" height="18" rx="3"/>
-          <rect x="80" y="20" width="16" height="16" rx="3"/><rect x="80" y="67" width="16" height="16" rx="3"/><rect x="80" y="114" width="16" height="16" rx="3"/>
-          <rect x="122" y="34" width="16" height="16" rx="3"/><rect x="122" y="67" width="16" height="16" rx="3"/><rect x="122" y="100" width="16" height="16" rx="3"/>
-          <rect x="162" y="22" width="16" height="16" rx="3"/><rect x="162" y="67" width="16" height="16" rx="3"/><rect x="162" y="112" width="16" height="16" rx="3"/>
-        </g>
-        <path d="M190 47L205 75L190 103" stroke-width="2" opacity=".8"/><circle cx="205" cy="75" r="6" fill="#eef2f8" stroke="#fff"/>
-      </svg>`,
-      hopfield: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <g opacity=".55" stroke-width="1.5"><path d="M110 18L173 54L173 106L110 138L47 106L47 54Z M110 18L110 138M47 54L173 106M173 54L47 106M110 18L173 106M110 18L47 106M47 54L173 54M47 106L173 106M173 54L110 138M47 54L110 138"/></g>
-        <g fill="#cdd5e3" stroke="#f0f4fa" stroke-width="1.3"><circle cx="110" cy="18" r="8"/><circle cx="173" cy="54" r="8"/><circle cx="173" cy="106" r="8"/><circle cx="110" cy="138" r="8"/><circle cx="47" cy="106" r="8"/><circle cx="47" cy="54" r="8"/></g>
-      </svg>`,
-      mamdani: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M25 124H197M25 124V18" stroke-width="2" opacity=".8"/><path d="M190 118L197 124L190 130M19 25L25 18L31 25" stroke-width="2" opacity=".8"/>
-        <path d="M34 124L70 34L106 124" stroke-width="2.2" opacity=".9"/><path d="M70 124L111 26L152 124" stroke-width="2.2" opacity=".85"/><path d="M112 124L156 48L196 124" stroke-width="2.2" opacity=".75"/>
-        <path d="M34 124H196" stroke-width="1.2" opacity=".3"/>
-      </svg>`,
-      tsk: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <g stroke-width="1.8" opacity=".65"><path d="M18 35H70M18 75H70M18 115H70M70 35L112 24M70 35L112 75M70 75L112 75M70 75L112 24M70 75L112 126M70 115L112 75M70 115L112 126M112 24L166 42M112 75L166 75M112 126L166 108"/></g>
-        <g fill="#d7deea" stroke="#f6f8fb" stroke-width="1"><circle cx="18" cy="35" r="6"/><circle cx="18" cy="75" r="6"/><circle cx="18" cy="115" r="6"/><circle cx="112" cy="24" r="7"/><circle cx="112" cy="75" r="7"/><circle cx="112" cy="126" r="7"/></g>
-        <g fill="rgba(215,222,234,.18)" stroke="#e7edf7" stroke-width="1.3"><rect x="157" y="29" width="49" height="26" rx="6"/><rect x="157" y="62" width="49" height="26" rx="6"/><rect x="157" y="95" width="49" height="26" rx="6"/></g>
-        <g stroke-width="1.5"><path d="M166 43H197M166 76H197M166 109H197" opacity=".8"/></g>
-      </svg>`,
-      optimization: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16 18H203M16 18V132" stroke-width="1.5" opacity=".55"/>
-        <g stroke-width="1.5" opacity=".45"><ellipse cx="119" cy="79" rx="76" ry="47" transform="rotate(-24 119 79)"/><ellipse cx="119" cy="79" rx="55" ry="33" transform="rotate(-24 119 79)"/><ellipse cx="119" cy="79" rx="33" ry="19" transform="rotate(-24 119 79)"/><ellipse cx="119" cy="79" rx="13" ry="7" transform="rotate(-24 119 79)"/></g>
-        <path d="M34 117L64 103L78 92L100 93L118 70L137 71L151 57L169 63" stroke-width="2.4"/><path d="M162 54L169 63L157 66" stroke-width="2.4"/>
-        <g fill="#eef2f8" stroke="#fff"><circle cx="34" cy="117" r="4.2"/><circle cx="64" cy="103" r="4.2"/><circle cx="100" cy="93" r="4.2"/><circle cx="137" cy="71" r="4.2"/><circle cx="169" cy="63" r="5"/></g>
-      </svg>`
+      mlp: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><g stroke-width="1.45" opacity=".56"><path d="M35 36L102 24M35 36L102 60M35 36L102 96M35 36L102 128M35 75L102 24M35 75L102 60M35 75L102 96M35 75L102 128M35 114L102 24M35 114L102 60M35 114L102 96M35 114L102 128M102 24L181 47M102 24L181 103M102 60L181 47M102 60L181 103M102 96L181 47M102 96L181 103M102 128L181 47M102 128L181 103"/></g><g fill="#c9d4e7" stroke="#eef3fb" stroke-width="1.2"><circle cx="35" cy="36" r="7"/><circle cx="35" cy="75" r="7"/><circle cx="35" cy="114" r="7"/><circle cx="102" cy="24" r="7"/><circle cx="102" cy="60" r="7"/><circle cx="102" cy="96" r="7"/><circle cx="102" cy="128" r="7"/><circle cx="181" cy="47" r="7"/><circle cx="181" cy="103" r="7"/></g></svg>`,
+      cnn: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="17" y="32" width="43" height="86" rx="7" fill="rgba(215,222,234,.08)" stroke-width="2"/><path d="M27 50H50M27 75H50M27 100H50M60 45L91 27M60 75L91 75M60 105L91 123" stroke-width="1.7" opacity=".65"/><g fill="#d7deea" stroke="#f6f8fb" stroke-width="1.2"><rect x="88" y="19" width="24" height="16" rx="3"/><rect x="88" y="67" width="24" height="16" rx="3"/><rect x="88" y="115" width="24" height="16" rx="3"/></g><path d="M112 27L145 45M112 75H145M112 123L145 105" stroke-width="1.7" opacity=".65"/><g fill="#d7deea" stroke="#f6f8fb" stroke-width="1.2"><rect x="143" y="34" width="26" height="22" rx="4"/><rect x="143" y="64" width="26" height="22" rx="4"/><rect x="143" y="94" width="26" height="22" rx="4"/></g><path d="M169 45H190M169 75H190M169 105H190" stroke-width="1.8"/><circle cx="198" cy="75" r="8" fill="#eef2f8" stroke="#fff"/></svg>`,
+      yoloUnet: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="17" y="24" width="76" height="102" rx="5" stroke-width="1.5" opacity=".55"/><path d="M29 110L47 77L61 91L77 53" stroke-width="2" opacity=".75"/><rect x="39" y="42" width="41" height="48" rx="2" stroke="#e8edf5" stroke-width="2"/><path d="M97 75H119M113 69L119 75L113 81" stroke-width="1.8" opacity=".7"/><rect x="128" y="24" width="76" height="102" rx="5" stroke-width="1.5" opacity=".55"/><path d="M140 36H192V66H140ZM140 76H163V114H140ZM170 76H192V114H170Z" fill="rgba(215,222,234,.18)" stroke-width="1.2"/><path d="M128 75H204M166 24V126" stroke-width="1" opacity=".28"/></svg>`,
+      recurrent: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M34 75H184M176 67L184 75L176 83" stroke-width="1.8" opacity=".7"/><g fill="#d7deea" stroke="#f6f8fb" stroke-width="1.4"><circle cx="34" cy="75" r="13"/><circle cx="109" cy="75" r="13"/><circle cx="184" cy="75" r="13"/></g><path d="M109 58C75 15 153 12 153 53M145 46L153 53L158 43" stroke-width="2" opacity=".9"/><path d="M184 94C157 135 76 137 63 94M66 104L63 94L75 95" stroke-width="1.8" opacity=".55"/><path d="M34 37V53M109 37V53M184 37V53" stroke-width="1.4" opacity=".45"/></svg>`,
+      transformer: `<svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><g stroke-width="1.5" opacity=".45"><path d="M35 31L75 31L115 31L155 31M35 75L75 75L115 75L155 75M35 119L75 119L115 119L155 119M35 31V119M75 31V119M115 31V119M155 31V119"/></g><g fill="#d7deea" stroke="#f6f8fb" stroke-width="1.2"><rect x="26" y="22" width="18" height="18" rx="3"/><rect x="66" y="22" width="18" height="18" rx="3"/><rect x="106" y="22" width="18" height="18" rx="3"/><rect x="146" y="22" width="18" height="18" rx="3"/><rect x="26" y="66" width="18" height="18" rx="3"/><rect x="66" y="66" width="18" height="18" rx="3"/><rect x="106" y="66" width="18" height="18" rx="3"/><rect x="146" y="66" width="18" height="18" rx="3"/><rect x="26" y="110" width="18" height="18" rx="3"/><rect x="66" y="110" width="18" height="18" rx="3"/><rect x="106" y="110" width="18" height="18" rx="3"/><rect x="146" y="110" width="18" height="18" rx="3"/></g><path d="M164 75H188M181 68L188 75L181 82" stroke-width="2"/><circle cx="199" cy="75" r="8" fill="#eef2f8" stroke="#fff"/></svg>`
     };
-
     const repoRoot = "https://github.com/rezaesCodes/Artificial-Intelligence-and-Expert-Systems-2026";
     const projects = [
-      {
-        "id":"mlp","number":"01","title":"MLP · RBM · Autoencoder",
-        "dates":"OCT 18 — NOV 01","state":"available","stateLabel":"",
-        "artKey":"mlp","fileCount":4,
-        "description":"A guided bakery-sales project covering three neural-network approaches: an MLP for sales prediction, an RBM for discovering patterns in 14-day sales windows, and an autoencoder for reconstruction and anomaly exploration. The guide notebook and its supporting data files are available below.",
-        "rows":[{"title":"01 · GUIDE","items":[
-          {"label":"Bakery sales guide notebook","detail":"Guided MLP, RBM and Autoencoder walkthrough","kind":"IPYNB","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/proj1-g.ipynb"},
-          {"label":"Bakery sales dataset","detail":"Daily revenue by product group; required for the guide","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/train.csv"},
-          {"label":"Weather data","detail":"Optional input for the MLP section","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/wetter.csv"},
-          {"label":"Kieler Woche events","detail":"Optional event indicator for the MLP section","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/kiwo.csv"}
-        ]}],
-        "note":"Start with the bakery sales guide notebook. Keep train.csv in the same folder when running the notebook. wetter.csv and kiwo.csv are optional and are only used when the corresponding optional MLP features are enabled."
-      },
-      {"id":"cnn","number":"02","title":"CNN","dates":"NOV 02 — NOV 11","state":"soon","stateLabel":"Soon","artKey":"cnn","fileCount":0},
-      {"id":"mamdani","number":"03","title":"Mamdani Fuzzy Inference Systems","dates":"NOV 12 — NOV 21","state":"soon","stateLabel":"Soon","artKey":"mamdani","fileCount":0},
-      {"id":"tsk","number":"04","title":"TSK Fuzzy Inference Systems","dates":"NOV 22 — DEC 01","state":"soon","stateLabel":"Soon","artKey":"tsk","fileCount":0},
-      {"id":"optimization","number":"05","title":"Optimization Algorithms","dates":"DEC 02 — DEC 11","state":"soon","stateLabel":"Soon","artKey":"optimization","fileCount":0}
+      {"id":"mlp","number":"01","title":"MLP · RBM · Autoencoder","dates":"OCT 18 — NOV 01","state":"available","stateLabel":"","artKey":"mlp","fileCount":6,
+        "description":"A guided bakery-sales project covering MLP prediction, RBM pattern discovery, and Autoencoder reconstruction. The guide is available now; the student project and answer sections are reserved for their later releases.",
+        "rows":[
+          {"title":"01 · GUIDE","items":[
+            {"label":"Bakery sales guide notebook","detail":"Guided MLP, RBM and Autoencoder walkthrough","kind":"IPYNB","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/proj1-g.ipynb"},
+            {"label":"Bakery sales dataset","detail":"Daily revenue by product group; required for the guide","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/train.csv"},
+            {"label":"Weather data","detail":"Optional input for the MLP section","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/wetter.csv"},
+            {"label":"Kieler Woche events","detail":"Optional event indicator for the MLP section","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/kiwo.csv"}]},
+          {"title":"02 · PROJECT","items":[{"label":"Student project files","detail":"Placeholder — assignment materials will be added here","kind":"PROJECT","locked":true}]},
+          {"title":"03 · ANSWERS","items":[{"label":"Project answers","detail":"Placeholder — answer materials are not released yet","kind":"ANSWERS","locked":true}]}
+        ],"note":"Keep train.csv in the same folder as the guide notebook. wetter.csv and kiwo.csv are optional and are only used when the corresponding optional MLP features are enabled."}
+      ,{"id":"cnn","number":"02","title":"CNN & Transfer Learning","dates":"NOV 02 — NOV 11","state":"soon","stateLabel":"Soon","artKey":"cnn","fileCount":0,"description":"Convolutional Neural Networks and transfer learning.","rows":[
+        {"title":"01 · GUIDE","items":[{"label":"CNN and transfer learning guide","detail":"Placeholder — guided material will be added here","kind":"IPYNB","locked":true}]},
+        {"title":"02 · PROJECT","items":[{"label":"Student project files","detail":"Placeholder — assignment materials will be added here","kind":"PROJECT","locked":true}]},
+        {"title":"03 · ANSWERS","items":[{"label":"Project answers","detail":"Placeholder — answer materials are not released yet","kind":"ANSWERS","locked":true}]}],"note":"This project has not been released yet."},
+      {"id":"yolo","number":"03","title":"YOLO & U-Net","dates":"NOV 12 — NOV 21","state":"soon","stateLabel":"Soon","artKey":"yoloUnet","fileCount":0,"description":"Object detection with YOLO and image segmentation with U-Net.","rows":[
+        {"title":"01 · GUIDE","items":[{"label":"YOLO and U-Net guide","detail":"Placeholder — guided material will be added here","kind":"IPYNB","locked":true}]},
+        {"title":"02 · PROJECT","items":[{"label":"Student project files","detail":"Placeholder — assignment materials will be added here","kind":"PROJECT","locked":true}]},
+        {"title":"03 · ANSWERS","items":[{"label":"Project answers","detail":"Placeholder — answer materials are not released yet","kind":"ANSWERS","locked":true}]}],"note":"This project has not been released yet."},
+      {"id":"rnn","number":"04","title":"RNN · LSTM · GRU","dates":"NOV 22 — DEC 01","state":"soon","stateLabel":"Soon","artKey":"recurrent","fileCount":0,"description":"Sequence modelling with Recurrent Neural Networks, LSTMs, and GRUs.","rows":[
+        {"title":"01 · GUIDE","items":[{"label":"RNN, LSTM and GRU guide","detail":"Placeholder — guided material will be added here","kind":"IPYNB","locked":true}]},
+        {"title":"02 · PROJECT","items":[{"label":"Student project files","detail":"Placeholder — assignment materials will be added here","kind":"PROJECT","locked":true}]},
+        {"title":"03 · ANSWERS","items":[{"label":"Project answers","detail":"Placeholder — answer materials are not released yet","kind":"ANSWERS","locked":true}]}],"note":"This project has not been released yet."},
+      {"id":"transformers","number":"05","title":"Transformers & ViTs","dates":"DEC 02 — DEC 11","state":"soon","stateLabel":"Soon","artKey":"transformer","fileCount":0,"description":"Transformer architectures and Vision Transformers (ViTs).","rows":[
+        {"title":"01 · GUIDE","items":[{"label":"Transformers and ViTs guide","detail":"Placeholder — guided material will be added here","kind":"IPYNB","locked":true}]},
+        {"title":"02 · PROJECT","items":[{"label":"Student project files","detail":"Placeholder — assignment materials will be added here","kind":"PROJECT","locked":true}]},
+        {"title":"03 · ANSWERS","items":[{"label":"Project answers","detail":"Placeholder — answer materials are not released yet","kind":"ANSWERS","locked":true}]}],"note":"This project has not been released yet."}
     ];
 
     const grid=document.getElementById('projectGrid');
@@ -206,17 +183,17 @@
 
     function renderProjects(){
       grid.innerHTML=projects.map(p=>{
-        const disabled=p.state!=='available';
+        const disabled=p.state==='locked';
         const art=modelArt[p.artKey]||'';
-        const packageMarkup='<span class="mailer '+(disabled?'mailer-sealed':'mailer-open')+'"><span class="mailer-top-strip"></span><span class="mailer-perforation"></span><span class="mailer-scissors" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.7"/><circle cx="6" cy="18" r="2.7"/><path d="M8.2 7.8L20 19M8.2 16.2L20 5"/></svg></span><span class="mailer-cut-edge"></span></span>';
-        return '<button class="project-card '+(disabled?'locked':'active')+'" type="button" data-project="'+p.id+'" '+(disabled?'disabled aria-disabled="true"':'aria-haspopup="dialog"')+' aria-label="'+p.title+(disabled?', coming soon':', open materials')+'">'+
+        const packageMarkup='<span class="mailer '+(p.state==='available'?'mailer-open':'mailer-sealed')+'"><span class="mailer-top-strip"></span><span class="mailer-perforation"></span><span class="mailer-scissors" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.7"/><circle cx="6" cy="18" r="2.7"/><path d="M8.2 7.8L20 19M8.2 16.2L20 5"/></svg></span><span class="mailer-cut-edge"></span></span>';
+        return '<button class="project-card '+(p.state==='available'?'active':'locked')+'" type="button" data-project="'+p.id+'" '+(disabled?'disabled aria-disabled="true"':'aria-haspopup="dialog"')+' aria-label="'+p.title+(disabled?', coming soon':', open materials')+'">'+
           '<span class="folder-stage" aria-hidden="true">'+packageMarkup+'<span class="project-art">'+art+'</span></span>'+
           '<span class="project-meta"><strong>'+p.title+'</strong><span class="project-date">'+p.dates+'</span>'+(p.stateLabel?'<span class="project-state">'+p.stateLabel+'</span>':'')+'</span></button>';
       }).join('');
       grid.querySelectorAll('button[data-project]:not(:disabled)').forEach(b=>b.addEventListener('click',()=>openProject(b.dataset.project,b)));
     }
     function openProject(id,button){
-      const p=projects.find(x=>x.id===id&&x.state==='available'); if(!p)return;
+      const p=projects.find(x=>x.id===id&&x.state!=='locked'); if(!p)return;
       lastFocused=button||document.activeElement;
       document.getElementById('modalTitle').textContent=p.title;
       document.getElementById('modalDate').textContent=p.dates;
