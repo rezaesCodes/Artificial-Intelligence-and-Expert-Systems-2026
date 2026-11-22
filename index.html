@@ -149,16 +149,20 @@
     const repoRoot = "https://github.com/rezaesCodes/Artificial-Intelligence-and-Expert-Systems-2026";
     const projects = [
       {"id":"mlp","number":"01","title":"MLP · RBM · Autoencoder","dates":"OCT 18 — NOV 01","state":"available","stateLabel":"","artKey":"mlp","fileCount":4,
-        "description":"Project 1 focuses on bakery-sales data using MLP prediction, RBM pattern discovery and Autoencoder reconstruction. All four project files are available in the Project section.",
+        "description":"The guide introduces MLP prediction, RBM pattern discovery and Autoencoder reconstruction using bakery-sales data. The student project applies these methods to wind-turbine condition monitoring.",
         "rows":[
-          {"title":"01 · GUIDE","items":[{"label":"Guide materials","detail":"Guide section is reserved for future release or organization","kind":"GUIDE","locked":true}]},
-          {"title":"02 · PROJECT","items":[
-            {"label":"Bakery sales notebook","detail":"MLP, RBM and Autoencoder walkthrough","kind":"IPYNB","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/proj1-g.ipynb"},
+          {"title":"01 · GUIDE","items":[
+            {"label":"Bakery sales guide notebook","detail":"Guided MLP, RBM and Autoencoder walkthrough","kind":"IPYNB","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/proj1-g.ipynb"},
             {"label":"Bakery sales dataset","detail":"Daily revenue by product group","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/train.csv"},
-            {"label":"Weather data","detail":"Optional MLP input feature","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/wetter.csv"},
-            {"label":"Kieler Woche events","detail":"Optional event indicator for the MLP section","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/kiwo.csv"}]},
+            {"label":"Weather data","detail":"Optional weather features for the guide","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/wetter.csv"},
+            {"label":"Kieler Woche events","detail":"Optional event dates for the guide","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/g/kiwo.csv"}]},
+          {"title":"02 · PROJECT","items":[
+            {"label":"Wind turbine assignment PDF","detail":"Student-facing project brief","kind":"PDF","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/project/proj1-q.pdf"},
+            {"label":"Student project notebook","detail":"Notebook template for the wind-turbine task","kind":"IPYNB","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/project/proj1-q.ipynb"},
+            {"label":"Wind turbine dataset","detail":"T1 wind-turbine measurements","kind":"CSV","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/project/T1.csv"},
+            {"label":"Dataset generation script","detail":"Generate a reproducible dataset with injected data issues","kind":"PY","href":repoRoot+"/blob/main/miniProjects/1-MLP-RBM-AE/project/generate_data.py"}]},
           {"title":"03 · ANSWERS","items":[{"label":"Project answers","detail":"Placeholder — answer materials are not released yet","kind":"ANSWERS","locked":true}]}
-        ],"note":"The project section contains exactly four files. Keep train.csv in the same folder as the notebook. wetter.csv and kiwo.csv are optional inputs used only when the corresponding MLP features are enabled."}
+        ],"note":"The Guide section contains the bakery-sales walkthrough and its supporting files. The Project section contains the four wind-turbine assignment files. Keep the notebook, T1.csv and generate_data.py together when running the student project."}
       ,{"id":"cnn","number":"02","title":"CNN & Transfer Learning","dates":"NOV 02 — NOV 11","state":"soon","stateLabel":"Soon","artKey":"cnn","fileCount":0,"description":"Convolutional Neural Networks and transfer learning.","rows":[
         {"title":"01 · GUIDE","items":[{"label":"CNN and transfer learning guide","detail":"Placeholder — guided material will be added here","kind":"IPYNB","locked":true}]},
         {"title":"02 · PROJECT","items":[{"label":"Student project files","detail":"Placeholder — assignment materials will be added here","kind":"PROJECT","locked":true}]},
